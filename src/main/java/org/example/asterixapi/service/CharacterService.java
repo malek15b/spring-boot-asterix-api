@@ -34,8 +34,12 @@ public class CharacterService {
         return String.format("%.2f", result);
     }
 
-    public Character getCharacter(CharacterDto characterDto) {
+    public Character addCharacter(CharacterDto characterDto) {
         Character character = characterDto.getCharacter(idService.randomId());
+        return this.characterRepository.save(character);
+    }
+
+    public Character updateCharacter(Character character) {
         return this.characterRepository.save(character);
     }
 

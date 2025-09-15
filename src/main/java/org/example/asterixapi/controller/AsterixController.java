@@ -31,8 +31,15 @@ public class AsterixController {
     }
 
     @PostMapping("/character")
-    public Character getCharacter(@RequestBody CharacterDto character) {
-        return this.characterService.getCharacter(character);
+    public Character addCharacter(@RequestBody CharacterDto character) {
+        return this.characterService.addCharacter(character);
+    }
+
+    @PostMapping("/character/{id}")
+    public Character updateCharacter(@PathVariable String id,
+                                     @RequestBody CharacterDto characterDto) {
+        Character character = characterDto.getCharacter(id);
+        return this.characterService.updateCharacter(character);
     }
 
     @GetMapping("/character/{id}")
