@@ -7,15 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CharacterService {
 
     private final CharacterRepository characterRepository;
+    private final IdService idService;
 
-    public CharacterService(CharacterRepository characterRepository) {
+    public CharacterService(
+            CharacterRepository characterRepository,
+            IdService idService) {
         this.characterRepository = characterRepository;
+        this.idService = idService;
     }
 
     public List<Character> getCharacters() {
@@ -32,7 +35,7 @@ public class CharacterService {
     }
 
     public Character getCharacter(CharacterDto characterDto) {
-        Character character = characterDto.getCharacter();
+        Character character = characterDto.getCharacter(idService.randomId());
         return this.characterRepository.save(character);
     }
 

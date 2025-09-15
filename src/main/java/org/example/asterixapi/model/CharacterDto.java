@@ -7,7 +7,7 @@ public record CharacterDto(
         int age, String
         profession) {
 
-    public Character getCharacter() {
-        return new Character(UUID.randomUUID().toString(), name, age, profession);
+    public Character getCharacter(String id) {
+        return new Character(id, name, age, profession);
     }
 }
