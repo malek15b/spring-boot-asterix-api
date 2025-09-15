@@ -1,8 +1,7 @@
 package org.example.asterixapi.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.asterixapi.repository.CharacterRepository;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.example.asterixapi.model.Character;
@@ -11,21 +10,40 @@ import org.example.asterixapi.model.Character;
 @RequestMapping ("/asterix")
 public class AsterixController {
 
-    @GetMapping("/characters")
-    public List<Character> getCharacters() {
-        return List.of(
-                new Character("1", "Asterix", 35, "Warrior"),
-                new Character("2", "Obelix", 35, "Supplier"),
-                new Character("3", "Miraculix", 60, "Druid"),
-                new Character("4", "Majestix", 60, "Chief"),
-                new Character("5", "Troubadix", 25, "Bard"),
-                new Character("6", "Gutemine", 35, "Chiefs Wife"),
-                new Character("7", "Idefix", 5, "Dog"),
-                new Character("8", "Geriatrix", 70, "Retiree"),
-                new Character("9", "Automatix", 35, "Smith"),
-                new Character("10", "Grockelix", 35, "Fisherman")
-        );
+    private final CharacterRepository characterRepository;
+
+    public AsterixController(CharacterRepository characterRepository) {
+        this.characterRepository = characterRepository;
     }
 
+    @GetMapping("/characters")
+    public List<Character> getCharacters(@RequestParam String profession) {
+        return this.characterRepository.findAll();
+    }
+
+    @GetMapping("/characters/avg-age")
+    public String getAverage(@RequestParam String profession) {
+        if(profession == null) {
+            return null;
+        }
+        List<Character> characters = characterRepository.findCharactersByProfession(profession);
+        Double result = characters.stream().mapToInt(Character::age).average().orElse(0.0);
+        return String.format("%.2f", result);
+    }
+
+    @PostMapping("/character")
+    public Character getCharacter(@RequestBody Character character) {
+        return this.characterRepository.save(character);
+    }
+
+    @GetMapping("/character/{id}")
+    public Character getCharacter(@PathVariable String id) {
+        return this.characterRepository.findById(id).orElse(null);
+    }
+
+    @DeleteMapping("/character/{id}")
+    public void removeCharacter(@PathVariable String id) {
+        this.characterRepository.deleteById(id);
+    }
 
 }
