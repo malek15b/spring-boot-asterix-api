@@ -25,6 +25,10 @@ public class CharacterService {
         return this.characterRepository.findAll();
     }
 
+    public List<Character> getCharacters(int age) {
+        return this.characterRepository.findCharactersByQuery(age);
+    }
+
     public String getAverage(String profession) {
         List<Character> characters = characterRepository.findCharactersByProfession(profession);
         Double result = characters.stream()

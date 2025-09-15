@@ -1,5 +1,6 @@
 package org.example.asterixapi.controller;
 
+import jakarta.websocket.server.PathParam;
 import org.example.asterixapi.model.CharacterDto;
 import org.example.asterixapi.service.CharacterService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,10 @@ public class AsterixController {
     }
 
     @GetMapping("/characters")
-    public List<Character> getCharacters() {
+    public List<Character> getCharacters(@RequestParam int age) {
+        if(age != 0) {
+            return this.characterService.getCharacters(age);
+        }
         return this.characterService.getCharacters();
     }
 
