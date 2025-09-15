@@ -1,6 +1,6 @@
 package org.example.asterixapi.controller;
 
-import org.example.asterixapi.repository.CharacterRepository;
+import org.example.asterixapi.model.CharacterDto;
 import org.example.asterixapi.service.CharacterService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ public class AsterixController {
     }
 
     @PostMapping("/character")
-    public Character getCharacter(@RequestBody Character character) {
+    public Character getCharacter(@RequestBody CharacterDto character) {
         return this.characterService.getCharacter(character);
     }
 

@@ -1,11 +1,13 @@
 package org.example.asterixapi.service;
 
 import org.example.asterixapi.model.Character;
+import org.example.asterixapi.model.CharacterDto;
 import org.example.asterixapi.repository.CharacterRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CharacterService {
@@ -29,7 +31,8 @@ public class CharacterService {
         return String.format("%.2f", result);
     }
 
-    public Character getCharacter(Character character) {
+    public Character getCharacter(CharacterDto characterDto) {
+        Character character = characterDto.getCharacter();
         return this.characterRepository.save(character);
     }
 
