@@ -1,31 +1,33 @@
 package org.example.asterixapi.service;
 
+import lombok.RequiredArgsConstructor;
+import org.example.asterixapi.event.CustomSpringEvent;
 import org.example.asterixapi.model.Character;
 import org.example.asterixapi.model.CharacterDto;
 import org.example.asterixapi.repository.CharacterRepository;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CharacterService {
 
     private final CharacterRepository characterRepository;
     private final IdService idService;
-
-    public CharacterService(
-            CharacterRepository characterRepository,
-            IdService idService) {
-        this.characterRepository = characterRepository;
-        this.idService = idService;
-    }
+    private final ApplicationEventPublisher events;
 
     public List<Character> getCharacters() {
         return this.characterRepository.findAll();
     }
 
     public List<Character> getCharacters(int age) {
+        System.out.println("Publishing custom event. ");
+        CustomSpringEvent customSpringEvent = new CustomSpringEvent("Avg: " + age);
+        events.publishEvent(customSpringEvent);
         return this.characterRepository.findCharactersByQuery(age);
     }
 
