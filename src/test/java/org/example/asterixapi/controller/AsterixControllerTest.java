@@ -35,22 +35,22 @@ class AsterixControllerTest {
         CharacterDto characterDto = new CharacterDto("Max", 25, "CEO");
         Character character = characterDto.getCharacter("120");
         characterRepository.save(character);
+        String response = """
+                [
+                {
+                "id": "120",
+                "name": "Max",
+                "age": 25,
+                "profession": "CEO"
+                }
+                ]
+                """;
+
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/asterix/characters"))
                 //THEN
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(
-                        """
-                                [
-                                {
-                                "id": "120",
-                                "name": "Max",
-                                "age": 25,
-                                "profession": "CEO"
-                                }
-                                ]
-                                """
-                ));
+                .andExpect(MockMvcResultMatchers.content().json(response));
     }
 
     @Test

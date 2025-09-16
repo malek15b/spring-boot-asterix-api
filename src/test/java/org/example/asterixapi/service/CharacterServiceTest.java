@@ -31,6 +31,7 @@ class CharacterServiceTest {
         IdService idService =  mock(IdService.class);
         String id = UUID.randomUUID().toString();
         Mockito.when(idService.randomId()).thenReturn(id);
+
         LocalDate date = LocalDate.of(2020, 1, 1);
         CharacterService service = new CharacterService(
                 characterRepository,
@@ -43,6 +44,8 @@ class CharacterServiceTest {
         Character character = service.addCharacter(characterDto, createdAt);
         //THEN
         Mockito.verify(characterRepository).save(characterCaptor.capture());
+
+        Mockito.verify(idService).randomId();
 
         LocalDateTime createdAtCaptor = characterCaptor.getValue().createdAt();
         assertEquals(createdAtCaptor, createdAt);
