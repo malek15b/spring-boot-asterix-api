@@ -18,9 +18,9 @@ public class AsterixController {
     }
 
     @GetMapping("/characters")
-    public List<Character> getCharacters(@RequestParam int age) {
-        if(age != 0) {
-            return this.characterService.getCharacters(age);
+    public List<Character> getCharacters(@RequestParam(required = false) String age) {
+        if(age != null) {
+            return this.characterService.getCharacters(Integer.parseInt(age));
         }
         return this.characterService.getCharacters();
     }

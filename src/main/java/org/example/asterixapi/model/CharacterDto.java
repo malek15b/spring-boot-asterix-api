@@ -9,7 +9,7 @@ public record CharacterDto(
         profession) {
 
     public Character getCharacter(String id) {
-        return new Character(id, name, age, profession, LocalDateTime.now());
+        return new Character(id, name, age, profession, null);
     }
 
     public Character getCharacter(String id, LocalDateTime createdAt) {
