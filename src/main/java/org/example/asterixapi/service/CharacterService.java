@@ -42,7 +42,8 @@ public class CharacterService {
 
     public Character addCharacter(CharacterDto characterDto) {
         Character character = characterDto.getCharacter(idService.randomId());
-        return this.characterRepository.save(character);
+        this.characterRepository.save(character);
+        return character;
     }
 
     public Character updateCharacter(Character character) {
