@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -41,7 +42,17 @@ public class CharacterService {
     }
 
     public Character addCharacter(CharacterDto characterDto) {
-        Character character = characterDto.getCharacter(idService.randomId());
+        Character character = characterDto.getCharacter(
+                idService.randomId(),
+                LocalDateTime.now());
+        this.characterRepository.save(character);
+        return character;
+    }
+
+    public Character addCharacter(CharacterDto characterDto, LocalDateTime createdAt) {
+        Character character = characterDto.getCharacter(
+                idService.randomId(),
+                createdAt);
         this.characterRepository.save(character);
         return character;
     }

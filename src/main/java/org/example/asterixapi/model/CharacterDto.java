@@ -1,5 +1,6 @@
 package org.example.asterixapi.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record CharacterDto(
@@ -8,6 +9,10 @@ public record CharacterDto(
         profession) {
 
     public Character getCharacter(String id) {
-        return new Character(id, name, age, profession);
+        return new Character(id, name, age, profession, LocalDateTime.now());
+    }
+
+    public Character getCharacter(String id, LocalDateTime createdAt) {
+        return new Character(id, name, age, profession, createdAt);
     }
 }
