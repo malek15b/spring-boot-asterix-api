@@ -1,6 +1,5 @@
 package org.example.asterixapi.controller;
 
-import jakarta.websocket.server.PathParam;
 import org.example.asterixapi.model.CharacterDto;
 import org.example.asterixapi.service.CharacterService;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +34,11 @@ public class AsterixController {
     }
 
     @PostMapping("/character")
+    public Character addCharacter(@RequestBody Character character) {
+        return this.characterService.save(character);
+    }
+
+    @PostMapping("/characterDto")
     public Character addCharacter(@RequestBody CharacterDto character) {
         return this.characterService.addCharacter(character);
     }
