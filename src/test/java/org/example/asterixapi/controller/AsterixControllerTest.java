@@ -56,15 +56,15 @@ class AsterixControllerTest {
     @Test
     public void addCharacter() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/asterix/character")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {
-                           "id": "525",
-                           "name": "Malek",
-                           "age": 43,
-                           "profession": "Senior"
-                        }
-                        """))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                   "id": "525",
+                                   "name": "Malek",
+                                   "age": 43,
+                                   "profession": "Senior"
+                                }
+                                """))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         """
@@ -83,12 +83,12 @@ class AsterixControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/asterix/characterDto")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                        {
-                           "name": "Malek",
-                           "age": 55,
-                           "profession": "Senior Java"
-                        }
-                        """))
+                                {
+                                   "name": "Malek",
+                                   "age": 55,
+                                   "profession": "Senior Java"
+                                }
+                                """))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         """
@@ -100,6 +100,7 @@ class AsterixControllerTest {
                                 """
                 ))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.createdAt").isNotEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.createdAt").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(5));
     }
 }
